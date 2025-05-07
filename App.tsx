@@ -48,6 +48,7 @@ const HomeTab = () => (
         fontSize: 12,
         fontWeight: '500',
       },
+      headerShown: false,
     }}>
     <Tab.Screen
       name={RouteNames.HOME}
