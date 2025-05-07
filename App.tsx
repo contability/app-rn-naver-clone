@@ -6,14 +6,65 @@ import ShoppingScreen from './screens/ShoppingScreen';
 import {RootStackParamList, RouteNames} from './routes';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BrowserScreen from './screens/BrowserScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const HomeIcon = ({
+  focused,
+  color,
+  size,
+}: {
+  focused: boolean;
+  color: string;
+  size: number;
+}) => {
+  const iconName = focused ? 'home' : 'home-outline';
+  return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+};
+const ShoppingIcon = ({
+  focused,
+  color,
+  size,
+}: {
+  focused: boolean;
+  color: string;
+  size: number;
+}) => {
+  const iconName = focused ? 'shopping' : 'shopping-outline';
+  return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
+};
+
 const HomeTab = () => (
-  <Tab.Navigator>
-    <Tab.Screen name={RouteNames.HOME} component={HomeScreen} />
-    <Tab.Screen name={RouteNames.SHOPPING} component={ShoppingScreen} />
+  <Tab.Navigator
+    screenOptions={{
+      tabBarStyle: {backgroundColor: 'black'},
+      // 선택된 아이콘의 색상을 뭘로 할건지
+      tabBarActiveTintColor: '#FFFFFF',
+      // 선택되지 않은 아이콘의 색상을 뭘로 할건지
+      tabBarInactiveTintColor: '#808080',
+      tabBarLabelStyle: {
+        fontSize: 12,
+        fontWeight: '500',
+      },
+    }}>
+    <Tab.Screen
+      name={RouteNames.HOME}
+      component={HomeScreen}
+      options={{
+        tabBarLabel: '홈',
+        tabBarIcon: HomeIcon,
+      }}
+    />
+    <Tab.Screen
+      name={RouteNames.SHOPPING}
+      component={ShoppingScreen}
+      options={{
+        tabBarLabel: '쇼핑',
+        tabBarIcon: ShoppingIcon,
+      }}
+    />
   </Tab.Navigator>
 );
 
@@ -29,7 +80,6 @@ const App = () => {
         <Stack.Screen
           name={RouteNames.HOME_TAB}
           component={HomeTab}
-          // 탭 네비게이터 상단 타이틀 숨김
           options={{headerShown: false}}
         />
         <Stack.Screen name={RouteNames.BROWSER} component={BrowserScreen} />
