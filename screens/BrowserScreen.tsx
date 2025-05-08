@@ -97,9 +97,9 @@ const BrowserScreen = ({route, navigation}: Props) => {
       <View style={styles.urlContainer}>
         <Text style={styles.urlText}>{urlTitle}</Text>
       </View>
+      {/* progress loading 애니메이션 */}
       <View style={styles.loadingBarBackground}>
         <Animated.View
-          // progress loading 애니메이션
           style={[
             styles.loadingBar,
             {
@@ -129,6 +129,7 @@ const BrowserScreen = ({route, navigation}: Props) => {
           progressAnim.setValue(0);
         }}
       />
+      {/* 푸터 네비게이션 */}
       <View style={styles.navigator}>
         <TouchableOpacity
           style={styles.button}
