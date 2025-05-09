@@ -78,6 +78,14 @@ const NavButton = ({
   );
 };
 
+// 핀치줌 비활성화 함수
+const DISABLE_PINCH_ZOOM = `(function() {
+  const meta = document.createElement('meta');
+  meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
+  meta.setAttribute('name', 'viewport');
+  document.getElementsByTagName('head')[0].appendChild(meta);
+})();`;
+
 // route도 App.tsx의 provider에서 넘겨주는 값이다.
 const BrowserScreen = ({route, navigation}: Props) => {
   const {initialUrl} = route.params;
@@ -120,6 +128,10 @@ const BrowserScreen = ({route, navigation}: Props) => {
           if (ref != null) context?.addWebView(ref);
         }}
         source={{uri: initialUrl}}
+        // 웹뷰에 자바스크립트를 주입해주는 속성
+        injectedJavaScript={DISABLE_PINCH_ZOOM}
+        // injectedJavaScript를 적용하려면 onMessage를 꼭 써줘야함. 쓸게 없어도 빈 함수라도 넣어줘야 함.
+        onMessage={() => {}}
         onNavigationStateChange={e => {
           setUrl(e.url);
           setCanGoBack(e.canGoBack);
