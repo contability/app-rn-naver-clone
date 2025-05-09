@@ -15,3 +15,5 @@ React Native CLI를 사용하여 iOS와 Android 환경에서 동작하는 앱을
 - ios 링크 롱 프레스 프리뷰 비활성화 (allowsLinkPreview)
 - 안드로이드 백버튼과 웹뷰 연결 (@react-native-community/hooks의 useBackHandler)
 - 텍스트 롱 프래스 액션 비활성화 (injectedJavaScript)
+
+9. 앱 아이콘 및 이름 설정
