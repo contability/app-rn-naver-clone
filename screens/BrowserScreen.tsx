@@ -15,6 +15,7 @@ import {RootStackParamList} from '../routes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {WebViewContext} from '../components/WebViewProvider';
+import {useBackHandler} from '@react-native-community/hooks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Browser'>;
 
@@ -102,6 +103,17 @@ const BrowserScreen = ({route, navigation}: Props) => {
   const [canGoForward, setCanGoForward] = useState(false);
 
   const context = useContext(WebViewContext);
+
+  // 안드로이드 백 버튼 관련 hook
+  useBackHandler(() => {
+    // 웹뷰 내에 뒤로가기 할 히스토리가 있다면 웹뷰 내에서 뒤로가기 동작.
+    if (canGoBack) {
+      webViewRef.current?.goBack();
+      return true;
+    }
+    // 그게 아니라면 screen 이동. false를 반환하면 기본 동작인 screen 단위 뒤로가기가 실행된다.
+    return false;
+  });
   return (
     <SafeAreaView style={styles.safearea}>
       {/* 현재 URL 표시 */}
@@ -132,6 +144,8 @@ const BrowserScreen = ({route, navigation}: Props) => {
         injectedJavaScript={DISABLE_PINCH_ZOOM}
         // injectedJavaScript를 적용하려면 onMessage를 꼭 써줘야함. 쓸게 없어도 빈 함수라도 넣어줘야 함.
         onMessage={() => {}}
+        // iOS 링크 롱 프레스 프리브 활성화 여부 속성. (default는 false)
+        allowsLinkPreview={false}
         onNavigationStateChange={e => {
           setUrl(e.url);
           setCanGoBack(e.canGoBack);

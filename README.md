@@ -11,7 +11,8 @@ React Native CLI를 사용하여 iOS와 Android 환경에서 동작하는 앱을
 
 8. 웹뷰 최적화 하기
 
-- 핀치 줌/아웃 비활성화
-- 링크 롱 프레스 프리뷰 비활성화
-- 안드로이드 백버튼과 웹뷰 연결
+- 핀치 줌/아웃 비활성화 (injectedJavaScript)
+- ios 링크 롱 프레스 프리뷰 비활성화 (allowsLinkPreview)
+- 안드로이드 백버튼과 웹뷰 연결 (@react-native-community/hooks의 useBackHandler)
+  - 정확하게는 안드로이드 백버튼을 눌렀을 때
 - 텍스트 롱 프래스 액션 비활성화
