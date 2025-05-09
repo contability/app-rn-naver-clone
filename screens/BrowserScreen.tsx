@@ -9,11 +9,12 @@ import {
   TouchableOpacity,
   Share,
 } from 'react-native';
-import {useState, useMemo, useRef} from 'react';
+import {useState, useMemo, useRef, useContext} from 'react';
 import WebView from 'react-native-webview';
 import {RootStackParamList} from '../routes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {WebViewContext} from '../components/WebViewProvider';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Browser'>;
 
@@ -91,6 +92,8 @@ const BrowserScreen = ({route, navigation}: Props) => {
   const webViewRef = useRef<WebView>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   const [canGoForward, setCanGoForward] = useState(false);
+
+  const context = useContext(WebViewContext);
   return (
     <SafeAreaView style={styles.safearea}>
       {/* 현재 URL 표시 */}
@@ -112,7 +115,10 @@ const BrowserScreen = ({route, navigation}: Props) => {
         />
       </View>
       <WebView
-        ref={webViewRef}
+        ref={ref => {
+          webViewRef.current = ref;
+          if (ref != null) context?.addWebView(ref);
+        }}
         source={{uri: initialUrl}}
         onNavigationStateChange={e => {
           setUrl(e.url);
