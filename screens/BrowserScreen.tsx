@@ -79,12 +79,17 @@ const NavButton = ({
   );
 };
 
-// 핀치줌 비활성화 함수
-const DISABLE_PINCH_ZOOM = `(function() {
+const DISABLE_WEBVIEW_EFFECT = `(function() {
+  // 핀치줌 비활성화 함수
   const meta = document.createElement('meta');
   meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
   meta.setAttribute('name', 'viewport');
   document.getElementsByTagName('head')[0].appendChild(meta);
+
+  // android 텍스트 롱 프레스 효과 비활성화
+  document.body.style['user-select'] = 'none';
+  // iOS 텍스트 롱 프레스 효과 비활성화
+  document.body.style['-webkit-user-select'] = 'none';
 })();`;
 
 // route도 App.tsx의 provider에서 넘겨주는 값이다.
@@ -141,7 +146,7 @@ const BrowserScreen = ({route, navigation}: Props) => {
         }}
         source={{uri: initialUrl}}
         // 웹뷰에 자바스크립트를 주입해주는 속성
-        injectedJavaScript={DISABLE_PINCH_ZOOM}
+        injectedJavaScript={DISABLE_WEBVIEW_EFFECT}
         // injectedJavaScript를 적용하려면 onMessage를 꼭 써줘야함. 쓸게 없어도 빈 함수라도 넣어줘야 함.
         onMessage={() => {}}
         // iOS 링크 롱 프레스 프리브 활성화 여부 속성. (default는 false)
