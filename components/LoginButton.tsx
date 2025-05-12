@@ -20,7 +20,6 @@ const LoginButton = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const iconName = isLoggedIn ? 'logout' : 'login';
-  console.log('🚀 ~ LoginButton ~ isLoggedIn:', isLoggedIn);
 
   const onPressLogin = useCallback(() => {
     navigation.navigate(RouteNames.LOGIN);
@@ -51,7 +50,9 @@ const LoginButton = () => {
     }
   }, [isFocused]);
   return (
-    <TouchableOpacity onPress={isLoggedIn ? onPressLogout : onPressLogin}>
+    <TouchableOpacity
+      onPress={isLoggedIn ? onPressLogout : onPressLogin}
+      activeOpacity={0.7}>
       <MaterialCommunityIcons name={iconName} color="white" size={24} />
     </TouchableOpacity>
   );
